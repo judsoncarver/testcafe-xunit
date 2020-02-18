@@ -21,6 +21,9 @@ jobs:
                       - ~/.cache/npm
             # End-to-end tests
             - run:
+                  name: Prep test reporter
+                  command: npm run clean
+            - run:
                   name: Run e2e tests
                   command: npm run e2e:xunit
             - store_test_results:

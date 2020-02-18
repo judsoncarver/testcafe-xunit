@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"e2e:xunit": "npx testcafe -e chrome --reporter xunit"
+		"clean": "mkdir -p test-results",
+		"e2e:xunit": "npx testcafe -e chrome --reporter xunit:test-results/res.xml"
 	},
 	"keywords": [],
 	"author": "",
