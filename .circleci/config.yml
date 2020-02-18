@@ -1,0 +1,27 @@
+version: 2.0
+jobs:
+    build:
+        docker:
+            - image: circleci/node:10-browsers
+        working_directory: /home/circleci/project
+        steps:
+            - checkout
+            - setup_remote_docker:
+                  docker_layer_caching: true
+            # Download and cache dependencies
+            - restore_cache:
+                  name: Restore NPM Package Cache
+                  keys:
+                      - npm-packages-{{ checksum "package.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: npm install
+            - save_cache:
+                  name: Save NPM Package Cache
+                  key: npm-packages-{{ checksum "package.lock" }}
+                  paths:
+                      - ~/.cache/npm
+            # End-to-end tests
+            - run:
+                  name: Run e2e tests
+                  command: npm run e2e:xunit
